@@ -90,19 +90,80 @@ const fi = (function() {
 
     sortBy: function (array, callback) {
       let sorted = [array[0]]
-      for (let i = 1; i < array.length; i++) {
-        let j = 0
-        for (; j < sorted.length; j++) {
-          if (array[i] < sorted[j]) {
-            sorted.splice(sorted[j], 0, array[i])
+      for (let i = 1; i < array.length; i++) { 
+        for (let j = 0; j < sorted.length; j++) {
+          if (callback(array[i]) < callback(sorted[j])) {
+            sorted.splice(j, 0, array[i])
+            break
+          } else if (j === sorted.length - 1){
+            sorted.push(array[i])
             break
           }
         }
       }
-      console.log("------")
-      console.log(sorted)
-      console.log("------")
       return sorted
+    },
+
+    flatten: function (array, shallow = false) {
+      let flatArr = []
+      if (shallow) {
+        flatArr = array.flat(1)
+      }else{
+        flatArr = array.flat(5)
+      }
+      return flatArr 
+    },
+
+    uniq: function (array, sorted, callback) {
+      let unique = [array[0]];
+      if (callback){
+        let results = [callback(array[0])]
+        for (let i = 1; i < array.length; i++) {
+          if (!results.includes(callback(array[i]))){
+            results.push(callback(array[i]));
+            unique.push(array[i])
+          }
+        }
+      } else {
+        for (let i = 1; i < array.length; i++) {
+          if (!unique.includes(array[i])){
+            unique.push(array[i])
+          }
+        }
+      }
+      return unique
+    },
+
+    keys: function (object) {
+      let keys = [];
+      for (let key in object) {
+        keys.push(key)
+      }
+      return keys
+    },
+
+    values: function (object) {
+      let values = [];
+      for (let value in object) {
+        values.push(object[`${value}`])
+      }
+      return values
+    },
+
+    functions: function(obj) {
+      let keys = this.keys(obj);
+      let funcs = []
+      for (let i = 0; i < keys.length; i++) {
+        if (typeof obj[`${keys[i]}`] === "function") {
+          funcs.push(keys[i])
+        }
+      }
+
+      let sortedFuncs = funcs.sort() 
+      console.log("------")
+      console.log(funcs)
+      console.log("------")
+      return sortedFuncs
     }
   }
 })()
