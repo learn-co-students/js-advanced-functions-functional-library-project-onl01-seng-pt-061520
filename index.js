@@ -151,18 +151,14 @@ const fi = (function() {
     },
 
     functions: function(obj) {
-      let keys = this.keys(obj);
       let funcs = []
-      for (let i = 0; i < keys.length; i++) {
-        if (typeof obj[`${keys[i]}`] === "function") {
-          funcs.push(keys[i])
+      for (let key in obj) {
+        if (typeof obj[key] === "function") {
+          funcs.push(key)
         }
       }
 
       let sortedFuncs = funcs.sort() 
-      console.log("------")
-      console.log(funcs)
-      console.log("------")
       return sortedFuncs
     }
   }
