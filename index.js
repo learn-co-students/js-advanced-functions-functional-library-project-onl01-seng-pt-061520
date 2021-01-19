@@ -7,8 +7,8 @@ const fi = (function() {
     each: function(col, callBack) {
       //Iterates over a collection of elements, passing each element in turn to a callback function. Each invocation of callback is called with three arguments: (element, index, collection). If collection is a JavaScript object, callback's arguments will be (value, key, collection). Returns the original collection for chaining.
 
-      const dup = (col instanceof Array) ? col.slice() : Object.values(col)
-      for (const elmnt of dup) { callBack(elmnt) }
+      const ans = (col instanceof Array) ? col.slice() : Object.values(col)
+      for (const elmnt of ans) { callBack(elmnt) }
       return col
     },
 
@@ -24,13 +24,13 @@ const fi = (function() {
 
     reduce: function(col, callBack, memo) {
       //Reduce boils down a collection of values into a single value. Acc (short for accumulator) starts as the initial state of the reduction, and with each successive step it should be accumulate the return value of callback. The callback is passed three arguments: the acc, the current value in our iteration (the element in the array), and finally a reference to the entire collection.
-      let dup = col.slice(0)
+      let ans = col.slice(0)
       
       if (!memo) {
-        memo = dup[0]
-        dup = dup.slice(1)
+        memo = ans[0]
+        ans = ans.slice(1)
       }
-      for (const elmnt of dup) {
+      for (const elmnt of ans) {
         memo = callBack(memo, elmnt)
       }
       return memo
@@ -124,7 +124,7 @@ const fi = (function() {
     },
 
     uniq: function(col, sorted = false, iterate = false) {
-      //Produces a duplicate-free version of the array, using === to test object equality. In particular only the first occurrence of each value is kept.
+      //Produces a anslicate-free version of the array, using === to test object equality. In particular only the first occurrence of each value is kept.
       if (sorted) {
         return fi.uniqueSorted(col, iterate)
       } else if (!iterate) {
